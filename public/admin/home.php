@@ -1,6 +1,8 @@
 <?php
 
 session_start();
+$page_title = 'Начало';
+$active_page_home = true;
 
 if (!array_key_exists('admin_loggedin', $_SESSION) || $_SESSION['admin_loggedin'] !== 1)
 {
@@ -8,7 +10,7 @@ if (!array_key_exists('admin_loggedin', $_SESSION) || $_SESSION['admin_loggedin'
     exit;
 }
 
-$pdo = new PDO('sqlite:../../private/bgwebdir.db');
+$pdo = new PDO('sqlite:../../private/db/bgwebdir.db');
 
 $activate = filter_input(INPUT_GET, 'activate', FILTER_VALIDATE_INT);
 if ($activate !== false && $activate !== null && $activate > 0)
@@ -42,18 +44,19 @@ if ($add_category === 1)
 
 $websites = $pdo->query("SELECT * FROM Websites WHERE Active = 0 ORDER BY Id DESC");
 $categories = $pdo->query("SELECT * FROM Categories ORDER BY Name ASC");
+$users = $pdo->query("SELECT Id, Email, DateCreated FROM Users ORDER BY Id DESC");
 
 include_once '../../private/admin/header.php';
 ?>
 <div class="row">
     <div class="col">
+        <div class="alert alert-warning" role="alert">Чакащи активиране</div>
         <table class="table table-hover table-bordered table-sm">
             <thead class="table-light">
                 <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
+                    <th scope="col">Заглавие</th>
                     <th scope="col">Url</th>
-                    <th scope="col">Date</th>
+                    <th scope="col">Дата</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -64,14 +67,12 @@ include_once '../../private/admin/header.php';
                 ?>
                     <tr>
                         <td style="white-space: pre-wrap;"><?php echo $website['Title']; ?></td>
-                        <td style="white-space: pre-wrap;"><?php echo $website['Description']; ?></td>
                         <td style="white-space: pre-wrap;"><?php echo $website['Url']; ?></td>
                         <td><?php echo $website['DateCreated']; ?></td>
                         <td>
                             <div class="btn-group-vertical btn-group-sm">
-                                <a href="/admin/home.php?activate=<?php echo $website['Id']; ?>" class="btn btn-primary">Активирай</a>
-                                <button type="button" class="btn btn-primary">Редактирай</button>
-                                <button type="button" class="btn btn-warning">Изтрии</button>
+                                <a href="/admin/home.php?activate=<?php echo $website['Id']; ?>" class="btn btn-warning">Активирай</a>
+                                <a href="/admin/websites.php?id=<?php echo $website['Id']; ?>" class="btn btn-primary">Редактирай</a>
                             </div>
                         </td>
                     </tr>
@@ -80,28 +81,62 @@ include_once '../../private/admin/header.php';
                 ?>
             </tbody>
         </table>
+        <div class="alert alert-secondary" role="alert">Потребители</div>
+        <table class="table table-hover table-bordered table-sm mt-3">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Дата</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($users as $user)
+            {
+            ?>
+                <tr>
+                    <td><?php echo $user['Id']; ?></td>
+                    <td><?php echo $user['Email']; ?></td>
+                    <td><?php echo $user['DateCreated']; ?></td>
+                </tr>
+            <?php
+            }
+            ?>
+            </tbody>
+        </table>
     </div>
-</div>
-<div class="row">
     <div class="col">
         <form method="post" action="/admin/home.php">
-            <input type="text" name="category_name" placeholder="Име" style="width: 300px; ">
-            <input type="text" name="category_acronym" placeholder="Акроним" style="width: 300px; ">
-            <input type="submit" value="Добави">
-            <input type="hidden" name="add_category" value="1">
+            <div class="row g-3">
+                <div class="col col-md-5"><input type="text" class="form-control" name="category_name" placeholder="Име"></div>
+                <div class="col col-md-5"><input type="text" class="form-control" name="category_acronym" placeholder="Акроним"></div>
+                <div class="col col-md-2"><input type="submit" class="btn btn-primary" value="Добави"><input type="hidden" name="add_category" value="1"></div>
+            </div>
         </form>
-        <ul>
+        <table class="table table-hover table-bordered table-sm mt-3">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Име</th>
+                    <th scope="col">Акроним</th>
+                </tr>
+            </thead>
+            <tbody>
             <?php
             foreach ($categories as $category)
             {
             ?>
-                <li>
-                    <?php echo $category['Id']; ?> <?php echo $category['Name']; ?> / <?php echo $category['Acronym']; ?>
-                </li>
+                <tr>
+                    <td><?php echo $category['Id']; ?></td>
+                    <td><?php echo $category['Name']; ?></td>
+                    <td><?php echo $category['Acronym']; ?></td>
+                </tr>
             <?php
             }
             ?>
-        </ul>
+            </tbody>
+        </table>
     </div>
 </div>
 <?php

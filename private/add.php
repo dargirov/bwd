@@ -1,12 +1,5 @@
 <?php
-session_start();
 
-include_once '../private/config.php';
-
-$page_title = 'Добави безплатно фирма и сайт';
-$class_active_add = true;
-
-$pdo = new PDO('sqlite:../private/bgwebdir.db');
 $categories = $pdo->query("SELECT * FROM categories ORDER BY Name ASC");
 $cities = $pdo->query("SELECT * FROM cities WHERE Type = 1 ORDER BY Name ASC");
 
@@ -174,12 +167,12 @@ if ($submit === 1 && $user_logged_in)
             'method' => 'POST',
             'content' => $postdata]];
 
-        // $context = stream_context_create($opts);
-        // $recaptcha_result = file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $context);
-        // $recaptcha_result_data = json_decode($recaptcha_result, true);
-        // if ($recaptcha_result_data['success'] === true)
-        // {
-            $random_acronym = microtime(true);
+        $context = stream_context_create($opts);
+        $recaptcha_result = file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $context);
+        $recaptcha_result_data = json_decode($recaptcha_result, true);
+        if ($recaptcha_result_data['success'] === true)
+        {
+            $random_acronym = 'a'. microtime(true);
 
             $insert = $pdo->prepare("INSERT INTO Websites
                        (Title, CategoryId, Description, FullDescription, Url, DateCreated, Active, Address, Phone, Email, CityId, UserId, Acronym)
@@ -198,13 +191,12 @@ if ($submit === 1 && $user_logged_in)
             $success = $insert->execute();
             if (!$success)
             {
-                var_dump($pdo->errorInfo());
+                var_dump($pdo->errorInfo(), $pdo->errorCode());
             }
-        // }
+        }
     }
 }
 
-include_once '../private/header.php';
 ?>
 <main class="main-form">
     <div>
@@ -228,7 +220,7 @@ include_once '../private/header.php';
             {
             ?>
             Полетата означени със * са задължителни
-            <form method="post" action="/add.php">
+            <form method="post" action="/add">
                 <table>
                     <tr>
                         <td>Заглавие *</td>
@@ -372,6 +364,3 @@ include_once '../private/header.php';
         </div>
     </div>
 </main>
-<?php
-include_once '../private/footer.php';
-?>

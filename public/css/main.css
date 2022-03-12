@@ -24,7 +24,7 @@ time, mark, audio, video {
 }
 
 body > header {
-    border-top: 2px solid #f3d251;
+    border-top: 3px solid #FFE1AF;
     display: flex;
     justify-content: center;
     height: 80px;
@@ -36,49 +36,43 @@ body > header {
     width: 1100px;
 }
 
+body > nav {
+    display: flex;
+    justify-content: center;
+    border-top: 2px solid #eee;
+    box-shadow: 0px 0px 3px 0px #eee;
+}
+
+body > nav > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1100px;
+}
+
 #header-nav {
     display: flex;
     list-style-type: none;
 }
 
-#header-nav a, #login-register-desktop-container a {
+#header-nav a {
     display: block;
     text-decoration: none;
     font-size: 14px;
     color: #000;
-    padding: 10px 15px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
-
-#login-register-desktop-container a {
-    display: inline-block;
-    padding-left: 1px;
-    padding-right: 1px;
+    padding: 15px;
+    border-bottom: 3px solid #fff;
+    transition: border-bottom 0.5s ease;
 }
 
 #header-nav a.active, #header-nav a:hover {
-    background-color: #f3d251;
-    color: #fff;
+    border-bottom: 3px solid #FFE1AF;
 }
 
-#login-register-desktop-container img {
-    width: 18px;
-    height: 18px;
-    margin-bottom: -4px;
-}
-
-#search {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f3d251;
-    padding: 30px 0;
-}
-
-#search input[type=text] {
+#search input, #search select {
     width: 300px;
-    box-sizing: content-box;
+    height: 40px;
+    border-right: 0;
 }
 
 #search form {
@@ -89,15 +83,16 @@ body > header {
 #search form a {
     display: flex;
     align-items: center;
-    background-color: #e9e9ed;
+    background-color: #FFE1AF;
     color: #333;
     text-decoration: none;
     padding: 0 15px;
     font-size: 14px;
+    height: 40px;
 }
 
 #search form a:hover {
-    background-color: #d1d1d4;
+    background-color: #fcc973;
 }
 
 #search form img {
@@ -115,6 +110,7 @@ input[type=text], select, textarea, input[type=password], input[type=email] {
     color: #333;
     background-color: #fff;
     box-sizing: border-box;
+    border: 1px solid #e9e9ed;
 }
 
 body > main {
@@ -308,12 +304,11 @@ body > footer a {
 }
 
 #logo-container {
-    padding-left: 100px;
+    overflow: hidden;
 }
 
 #logo-container img {
-    width: 30px;
-    height: 30px;
+    margin-top: 10px;
 }
 
 #nav-icon1, #header-mobile {
@@ -461,8 +456,9 @@ body > footer a {
 }
 
 .btn {
-    display: inline-block;
-    padding: 10px;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 15px;
     background-color: #fff;
     text-decoration: none;
     font-size: 14px;
@@ -471,6 +467,57 @@ body > footer a {
 
 .btn:hover {
     background-color: #f7f7f7;
+}
+
+.btn img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.btn-site-register {
+    background-color: #D57E7E;
+    color: #fff;
+    border: 0;
+    transition: background-color 0.5s ease;
+    margin-top: 20px;
+}
+
+.btn-site-register:hover {
+    background-color: #d36363;
+}
+
+.btn-log-reg {
+    background-color: #A2CDCD;
+    border: 0;
+    color: #fff;
+    transition: background-color 0.5s ease;
+}
+
+.btn-log-reg:hover {
+    background-color: #7dc5c5;
+}
+
+#footer-logo {
+    display: flex;
+    align-items: center;
+}
+
+#footer-logo > div:first-of-type {
+    padding-right: 20px;
+}
+
+#not-found-container {
+    display: flex;
+    justify-content: center;
+}
+
+#not-found-container > div {
+    width: 1100px;
+    margin: 100px 0;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
 }
 
 @media all and (max-width: 1000px) {
@@ -584,11 +631,31 @@ body > footer a {
         transform: rotate(-135deg);
     }
 
+    body > nav > div {
+        width: 100%;
+    }
+
+    #header-nav {
+        display: none;
+    }
+
     #search form {
         flex-direction: column;
     }
 
+    #search {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: 5px;
+    }
+
     #search form a {
+        height: 48px;
+    }
+
+    #search input, #search select {
+        border-right: 1px solid #e9e9ed;
         height: 48px;
     }
 
@@ -667,6 +734,10 @@ body > footer a {
     #popup-close {
         top: -30px;
         right: 12px;
+    }
+
+    #not-found-container > div {
+        width: 100%;
     }
 
 }

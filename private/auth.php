@@ -1,9 +1,4 @@
 <?php
-session_start();
-
-include_once '../private/config.php';
-
-$pdo = new PDO('sqlite:../private/bgwebdir.db');
 
 $error_messages = [];
 $has_error_register = false;

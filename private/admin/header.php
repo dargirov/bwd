@@ -3,23 +3,39 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Администрация - начало</title>
+        <title><?php echo isset($page_title) ? ($page_title . ' - ') : ''; ?>Администрация</title>
         <link href="/admin/css/bootstrap.min.css" rel="stylesheet">
         <script src="/admin/js/bootstrap.bundle.min.js"></script>
+        <style>
+            body > main {
+                margin-bottom: 50px;
+            }
+        </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Navbar</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="/admin/home.php"><img src="/images/logo.png" alt="" height="24" class="d-inline-block align-text-top"></a>
+                <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse">
-                    <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="/admin/home.php">Начало</a>
-                        <a class="nav-link" aria-current="page" href="/admin/websites.php">Линкове</a>
+                <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo isset($active_page_home) && $active_page_home ? 'active' : ''; ?>" aria-current="page" href="/admin/home.php">Начало</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo isset($active_page_websites) && $active_page_websites ? 'active' : ''; ?>" href="/admin/websites.php">Сайтове</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <div class="btn-group">
+                            <a href="/" class="btn btn-outline-dark" target="_blank">Сайт</a>
+                            <a href="/admin/logout.php" class="btn btn-outline-dark">Изход</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </nav>
-        <div class="container">
+        <main class="flex-shrink-0">
+            <div class="container mt-3">

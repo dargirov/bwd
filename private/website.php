@@ -1,33 +1,9 @@
 <?php
-session_start();
-
-include_once '../private/config.php';
-
-$pdo = new PDO('sqlite:../private/bgwebdir.db');
-
-$acronym = filter_input(INPUT_GET, 'n');
-if (strlen($acronym) < 3 || strlen($acronym) > 500)
-{
-    header('Location: /');
-    exit;
-}
-
-$website_q = $pdo->prepare("SELECT * FROM Websites WHERE Acronym = :acronym");
-$website_q->execute([':acronym' => $acronym]);
-$website = $website_q->fetch();
-if ($website === false || !is_array($website))
-{
-    header('Location: /');
-    exit;
-}
 
 $category_q = $pdo->prepare("SELECT * FROM Categories WHERE Id = :id");
 $category_q->execute([':id' => $website['CategoryId']]);
 $category = $category_q->fetch();
 
-$page_title = htmlspecialchars($website['Title']);
-
-include_once '../private/header.php';
 ?>
 <main>
     <div>
@@ -42,7 +18,7 @@ include_once '../private/header.php';
             <?php
             }
             ?>
-            <div>Категория: <a href="/category.php?n=<?php echo $category['Acronym']; ?>"><?php echo $category['Name']; ?></a></div>
+            <div>Категория: <a href="/category/<?php echo $category['Acronym']; ?>"><?php echo $category['Name']; ?></a></div>
         </div>
         <div id="main-right">
             <div>
@@ -68,14 +44,14 @@ include_once '../private/header.php';
                     if (mb_strlen($website['Phone']) > 0)
                     {
                         ?>
-                        <li><img src="/images/phone.svg"> <?php echo htmlspecialchars($website['Phone']); ?></li>
+                        <li><img src="/images/phone.svg"> <a href="tel:<?php echo htmlspecialchars($website['Phone']); ?>"><?php echo htmlspecialchars($website['Phone']); ?></a></li>
                         <?php
                     }
 
                     if (mb_strlen($website['Email']) > 0)
                     {
                         ?>
-                        <li><img src="/images/email.svg"> <?php echo htmlspecialchars($website['Email']); ?></li>
+                        <li><img src="/images/email.svg"> <a href="mailto:<?php echo htmlspecialchars($website['Email']); ?>"><?php echo htmlspecialchars($website['Email']); ?></a></li>
                         <?php
                     }
 
@@ -91,6 +67,3 @@ include_once '../private/header.php';
         </div>
     </div>
 </main>
-<?php
-include_once '../private/footer.php';
-?>

@@ -46,7 +46,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         var form = document.createElement('form');
         form.method = 'post';
-        form.action = '/auth.php';
+        form.action = '/auth';
 
         var divEmail = document.createElement('div');
         var inputEmail = document.createElement('input');
@@ -125,7 +125,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         var form = document.createElement('form');
         form.method = 'post';
-        form.action = '/auth.php';
+        form.action = '/auth';
 
         var divEmail = document.createElement('div');
         var inputEmail = document.createElement('input');

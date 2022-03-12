@@ -4,33 +4,33 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?php echo isset($page_title) ? $page_title : ''; ?></title>
-        <link rel="stylesheet" href="css/main.css?v=<?php echo APP_VERSION; ?>">
+        <link rel="stylesheet" href="/css/main.css?v=<?php echo APP_VERSION; ?>">
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
     <body>
+        <!-- https://colorhunt.co/palette/c6d57ed57e7ea2cdcdffe1af -->
         <header>
             <div id="header-desktop">
-                <div>
-                    <nav>
-                        <ul id="header-nav">
-                            <li><a href="/" class="<?php echo isset($class_active_home) && $class_active_home ? 'active' : ''; ?>">Начало</a></li>
-                            <li><a href="/add.php" class="<?php echo isset($class_active_add) && $class_active_add ? 'active' : ''; ?>">Добави сайт безплатно</a></li>
-                            <li><a href="/contacts.php" class="<?php echo isset($class_active_contacts) && $class_active_contacts ? 'active' : ''; ?>">Контакти</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div id="logo-container"><!--<img src="/images/logo.svg">--></div>
+                <div id="logo-container"><a href="/"><img src="/images/logo.png"></a></div>
                 <?php
                 if (!array_key_exists('loggedin', $_SESSION) || $_SESSION['loggedin'] !== 1)
                 {
                 ?>
-                    <div id="login-register-desktop-container"><img src="/images/user.svg"> <a href="#" class="login-popup">Вход</a> / <a href="#" class="register-popup">Регистрация</a></div>
+                    <div>
+                        <a href="/add" class="btn btn-site-register"><img src="/images/add.svg" alt="Добави сайт"> Добави сайт безплатно</a>
+                        <a href="#" class="btn btn-log-reg login-popup"><img src="/images/user.svg"> Вход</a>
+                        <a href="#" class="btn btn-log-reg register-popup"><img src="/images/user.svg"> Регистрация</a>
+                    </div>
                 <?php
                 }
                 else
                 {
                 ?>
-                    <div id="login-register-desktop-container"><img src="/images/user.svg"> <a href="/profile.php">Профил</a> / <a href="/auth.php?l=1">Изход</a></div>
+                    <div>
+                        <a href="/add" class="btn btn-site-register"><img src="/images/add.svg" alt="Добави сайт"> Добави сайт безплатно</a>
+                        <a href="/profile" class="btn btn-log-reg"><img src="/images/user.svg"> Профил</a>
+                        <a href="/auth?l=1" class="btn btn-log-reg"><img src="/images/exit.svg">Изход</a>
+                    </div>
                 <?php
                 }
                 ?>
@@ -39,8 +39,8 @@
                 <nav>
                     <ul id="header-nav-mobile">
                         <li><a href="/" class="<?php echo isset($class_active_home) && $class_active_home ? 'active' : ''; ?>">Начало</a></li>
-                        <li><a href="/add.php" class="<?php echo isset($class_active_add) && $class_active_add ? 'active' : ''; ?>">Добави сайт безплатно</a></li>
-                        <li><a href="/contacts.php" class="<?php echo isset($class_active_contacts) && $class_active_contacts ? 'active' : ''; ?>">Контакти</a></li>
+                        <li><a href="/add" class="<?php echo isset($class_active_add) && $class_active_add ? 'active' : ''; ?>">Добави сайт безплатно</a></li>
+                        <li><a href="/contacts" class="<?php echo isset($class_active_contacts) && $class_active_contacts ? 'active' : ''; ?>">Контакти</a></li>
                         <?php
                         if (!array_key_exists('loggedin', $_SESSION) || $_SESSION['loggedin'] !== 1)
                         {
@@ -52,8 +52,8 @@
                         else
                         {
                         ?>
-                        <li><a href="/profile.php">Профил</a></li>
-                        <li><a href="/auth.php?l=1">Изход</a></li>
+                        <li><a href="/profile">Профил</a></li>
+                        <li><a href="/auth?l=1">Изход</a></li>
                         <?php
                         }
                         ?>
@@ -66,26 +66,32 @@
                 <span></span>
             </div>
         </header>
-        <section id="search">
+        <nav>
             <div>
-                <form method="get" action="/search.php">
-                    <input type="text" name="n" placeholder="Търси по име, продукт или услуга">
-                    <?php
-                    $header_categories = $pdo->query("SELECT * FROM categories ORDER BY Name ASC");
-                    ?>
-                    <select name="c">
-                        <option value="0">Всички категории</option>
+                <ul id="header-nav">
+                    <li><a href="/" class="<?php echo isset($class_active_home) && $class_active_home ? 'active' : ''; ?>">Начало</a></li>
+                    <li><a href="/contacts" class="<?php echo isset($class_active_contacts) && $class_active_contacts ? 'active' : ''; ?>">Контакти</a></li>
+                </ul>
+                <div id="search">
+                    <form method="get" action="/search">
+                        <input type="text" name="n" placeholder="Търси по име, продукт или услуга">
                         <?php
-                        foreach($header_categories as $c)
-                        {
-                            echo '<option value="' . $c['Id'] . '">' . $c['Name'] . '</option>';
-                        }
+                        $header_categories = $pdo->query("SELECT * FROM categories ORDER BY Name ASC");
                         ?>
-                    </select>
-                    <a href=""><img src="images/search.svg"> Търси</a>
-                </form>
+                        <select name="c">
+                            <option value="0">Всички категории</option>
+                            <?php
+                            foreach($header_categories as $c)
+                            {
+                                echo '<option value="' . $c['Id'] . '">' . $c['Name'] . '</option>';
+                            }
+                            ?>
+                        </select>
+                        <a href=""><img src="/images/search.svg"> Търси</a>
+                    </form>
+                </div>
             </div>
-        </section>
+        </nav>
         <?php
         if (array_key_exists('auth', $_SESSION) && $_SESSION['auth']['has_error'])
         {

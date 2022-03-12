@@ -1,11 +1,4 @@
 <?php
-session_start();
-
-include_once '../private/config.php';
-
-$class_active_contacts = true;
-
-$pdo = new PDO('sqlite:../private/bgwebdir.db');
 
 $submit = filter_input(INPUT_POST, 'submit', FILTER_VALIDATE_INT);
 $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
@@ -70,12 +63,11 @@ if ($submit === 1)
             $insert->bindParam(':email', $email);
             $insert->bindParam(':content', $content);
             $insert->execute();
-            header('Location: /contacts.php?s=1');
+            header('Location: /contacts?s=1');
         }
     }
 }
 
-include_once '../private/header.php';
 ?>
 <main class="main-form">
     <div>
@@ -89,7 +81,7 @@ include_once '../private/header.php';
             <?php
             }
             ?>
-            <form method="post" action="/contacts.php">
+            <form method="post" action="/contacts">
                 <table>
                     <tr>
                         <td>Email адрес *</td>
@@ -131,6 +123,3 @@ include_once '../private/header.php';
         </div>
     </div>
 </main>
-<?php
-include_once '../private/footer.php';
-?>

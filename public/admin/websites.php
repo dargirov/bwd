@@ -1,6 +1,8 @@
 <?php
 
 session_start();
+$page_title = 'Web сайтове';
+$active_page_websites = true;
 
 if (!array_key_exists('admin_loggedin', $_SESSION) || $_SESSION['admin_loggedin'] !== 1)
 {
@@ -8,7 +10,7 @@ if (!array_key_exists('admin_loggedin', $_SESSION) || $_SESSION['admin_loggedin'
     exit;
 }
 
-$pdo = new PDO('sqlite:../../private/bgwebdir.db');
+$pdo = new PDO('sqlite:../../private/db/bgwebdir.db');
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if ($id > 0)
@@ -158,10 +160,10 @@ else
         <table class="table table-hover table-bordered table-sm">
             <thead class="table-light">
                 <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
+                    <th scope="col">Заглавие</th>
+                    <th scope="col">Кратко описание</th>
                     <th scope="col">Url</th>
-                    <th scope="col">Date</th>
+                    <th scope="col">Дата</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -170,7 +172,7 @@ else
                 foreach ($websites as $website)
                 {
                 ?>
-                    <tr>
+                    <tr class="<?php echo $website['Active'] == 1 ? '' : 'table-warning'; ?>">
                         <td style="white-space: pre-wrap;"><?php echo $website['Title']; ?></td>
                         <td style="white-space: pre-wrap;"><?php echo $website['Description']; ?></td>
                         <td style="white-space: pre-wrap;"><?php echo $website['Url']; ?></td>
@@ -187,7 +189,7 @@ else
                                 else
                                 {
                                 ?>
-                                <a href="/admin/home.php?activate=<?php echo $website['Id']; ?>" class="btn btn-primary">Активирай</a>
+                                <a href="/admin/home.php?activate=<?php echo $website['Id']; ?>" class="btn btn-warning">Активирай</a>
                                 <?php
                                 }
                                 ?>

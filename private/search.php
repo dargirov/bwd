@@ -1,20 +1,14 @@
 <?php
-session_start();
-
-include_once '../private/config.php';
-
-$pdo = new PDO('sqlite:../private/bgwebdir.db');
 
 $search_for = trim(filter_input(INPUT_GET, 'n'));
 $category = filter_input(INPUT_GET, 'c', FILTER_VALIDATE_INT);
-
+$stop_search = false;
 if (mb_strlen($search_for) === 0 || mb_strlen($search_for) > 100)
 {
-    header('Location: /');
-    exit;
+    $stop_search = true;
 }
 
-if ($category > 0)
+if (!$stop_search && $category > 0)
 {
     $categoryExists = $pdo->prepare("SELECT COUNT(*) AS n FROM categories WHERE Id = :id");
     $categoryExists->execute([':id' => $category]);
@@ -34,7 +28,7 @@ if ($category > 0)
     ORDER BY Id DESC");
     $websites->execute([$category, '%' . $search_for . '%', '%' . $search_for . '%', '%' . $search_for . '%']);
 }
-else
+else if (!$stop_search)
 {
     $websites = $pdo->prepare("SELECT * FROM Websites
     WHERE
@@ -48,27 +42,32 @@ else
 
 $has_results = false;
 
-include_once '../private/header.php';
 ?>
 <main class="main-form">
     <div>
         <div id="main-left">
             <strong>Резултати за: <?php echo $search_for; ?></strong>
-            <ul>
-                <?php
-                foreach ($websites as $website)
-                {
-                    $has_results = true;
-                ?>
-                    <li>
-                        <a href="/details.php?n=<?php echo $website['Acronym']; ?>"><?php echo $website['Title']; ?></a>
-                        <span><?php echo $website['Description']; ?></span>
-                    </li>
-                <?php
-                }
-                ?>
-            </ul>
             <?php
+            if (!$stop_search)
+            {
+            ?>
+                <ul>
+                    <?php
+                    foreach ($websites as $website)
+                    {
+                        $has_results = true;
+                    ?>
+                        <li>
+                            <a href="/site/<?php echo $website['Acronym']; ?>"><?php echo $website['Title']; ?></a>
+                            <span><?php echo $website['Description']; ?></span>
+                        </li>
+                    <?php
+                    }
+                    ?>
+                </ul>
+            <?php
+            }
+
             if (!$has_results)
             {
             ?>
@@ -79,6 +78,3 @@ include_once '../private/header.php';
         </div>
     </div>
 </main>
-<?php
-include_once '../private/footer.php';
-?>

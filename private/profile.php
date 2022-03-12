@@ -1,17 +1,4 @@
 <?php
-session_start();
-
-if (!array_key_exists('loggedin', $_SESSION) || $_SESSION['loggedin'] !== 1)
-{
-    header('Location: /');
-    exit;
-}
-
-include_once '../private/config.php';
-
-$page_title = 'Профил - ' . $_SESSION['loggedin_email'];
-
-$pdo = new PDO('sqlite:../private/bgwebdir.db');
 
 $websites = $pdo->prepare("SELECT * FROM Websites WHERE UserId = :user ORDER BY Id DESC");
 $websites->execute([':user' => $_SESSION['loggedin_user_id']]);
@@ -217,7 +204,6 @@ if ($submit === 1 && $edit_id > 0)
         $success = $insert->execute();
     }
 }
-include_once '../private/header.php';
 ?>
 <main class="main-form">
     <div>
@@ -237,7 +223,7 @@ include_once '../private/header.php';
                 {
                 ?>
                 Полетата означени със * са задължителни
-                <form method="post" action="/profile.php?edit=<?php echo $edit_id; ?>">
+                <form method="post" action="/profile?edit=<?php echo $edit_id; ?>">
                     <table>
                         <tr>
                             <td>Заглавие *</td>
@@ -387,7 +373,7 @@ include_once '../private/header.php';
                 ?>
                     <tr>
                         <td><?php echo $website['Title']; ?><br><?php echo $website['Url']; ?></td>
-                        <td><a href="/profile.php?edit=<?php echo $website['Id']; ?>" class="btn">Редактирай</a></td>
+                        <td><a href="/profile?edit=<?php echo $website['Id']; ?>" class="btn">Редактирай</a></td>
                     </tr>
                 <?php
                 }
@@ -403,6 +389,3 @@ include_once '../private/header.php';
         </div>
     </div>
 </main>
-<?php
-include_once '../private/footer.php';
-?>
