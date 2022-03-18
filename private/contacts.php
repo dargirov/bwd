@@ -4,7 +4,7 @@ $submit = filter_input(INPUT_POST, 'submit', FILTER_VALIDATE_INT);
 $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 $recaptcha = filter_input(INPUT_POST, 'g-recaptcha-response');
 $content = trim(filter_input(INPUT_POST, 'content'));
-$success = filter_input(INPUT_GET, 's', FILTER_VALIDATE_INT);
+$success = false;
 
 $error_email = '';
 $error_content = '';
@@ -63,7 +63,7 @@ if ($submit === 1)
             $insert->bindParam(':email', $email);
             $insert->bindParam(':content', $content);
             $insert->execute();
-            header('Location: /contacts?s=1');
+            $success = true;
         }
     }
 }
@@ -74,13 +74,16 @@ if ($submit === 1)
         <div id="main-left">
             <strong>За контакти</strong>
             <?php
-            if ($success === 1)
+            if ($success)
             {
             ?>
-                Съобщението е изпратено успешно. Ще ви отговорим възможно най-скоро.
+                <div class="success-inline">Съобщението е изпратено успешно. Ще ви отговорим възможно най-скоро.</div>
             <?php
             }
             ?>
+            <ul class="rules">
+                <li>Полетата означени със * са задължителни.</li>
+            </ul>
             <form method="post" action="/contacts">
                 <table>
                     <tr>

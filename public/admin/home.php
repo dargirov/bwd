@@ -45,6 +45,7 @@ if ($add_category === 1)
 $websites = $pdo->query("SELECT * FROM Websites WHERE Active = 0 ORDER BY Id DESC");
 $categories = $pdo->query("SELECT * FROM Categories ORDER BY Name ASC");
 $users = $pdo->query("SELECT Id, Email, DateCreated FROM Users ORDER BY Id DESC");
+$contacts = $pdo->query("SELECT * FROM Contacts ORDER BY Id DESC");
 
 include_once '../../private/admin/header.php';
 ?>
@@ -99,6 +100,32 @@ include_once '../../private/admin/header.php';
                     <td><?php echo $user['Id']; ?></td>
                     <td><?php echo $user['Email']; ?></td>
                     <td><?php echo $user['DateCreated']; ?></td>
+                </tr>
+            <?php
+            }
+            ?>
+            </tbody>
+        </table>
+        <div class="alert alert-secondary" role="alert">Коментари</div>
+        <table class="table table-hover table-bordered table-sm mt-3">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Коментар</th>
+                    <th scope="col">Дата</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($contacts as $contact)
+            {
+            ?>
+                <tr>
+                    <td><?php echo $contact['Id']; ?></td>
+                    <td><?php echo $contact['Email']; ?></td>
+                    <td><?php echo $contact['Content']; ?></td>
+                    <td><?php echo $contact['DateCreated']; ?></td>
                 </tr>
             <?php
             }

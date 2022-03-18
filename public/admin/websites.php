@@ -32,6 +32,7 @@ if ($action === 'edit' && $id > 0)
     $category = filter_input(INPUT_POST, 'category', FILTER_VALIDATE_INT);
     $description = filter_input(INPUT_POST, 'description');
     $full_description = filter_input(INPUT_POST, 'full_description');
+    $search_string = filter_input(INPUT_POST, 'search_string');
     $url = filter_input(INPUT_POST, 'url');
     $city = filter_input(INPUT_POST, 'city', FILTER_VALIDATE_INT);
     $address = filter_input(INPUT_POST, 'address');
@@ -44,6 +45,7 @@ if ($action === 'edit' && $id > 0)
         CategoryId = :category,
         Description = :description,
         FullDescription = :full_description,
+        SearchString = :search_string,
         Url = :url,
         CityId = :city,
         Address = :address,
@@ -55,6 +57,7 @@ if ($action === 'edit' && $id > 0)
     $update_query->bindParam(':category', $category);
     $update_query->bindParam(':description', $description);
     $update_query->bindParam(':full_description', $full_description);
+    $update_query->bindParam(':search_string', $search_string);
     $update_query->bindParam(':url', $url);
     $update_query->bindParam(':city', $city);
     $update_query->bindParam(':address', $address);
@@ -112,6 +115,10 @@ if ($id > 0)
                 <div class="mb-3">
                     <label for="full_description" class="form-label">Full Description</label>
                     <textarea name="full_description" class="form-control" id="full_description" style="height: 200px;"><?php echo htmlspecialchars($website['FullDescription']); ?></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="search_string" class="form-label">Search string</label>
+                    <textarea name="search_string" class="form-control" id="search_string" style="height: 200px;"><?php echo htmlspecialchars(mb_strlen($website['SearchString']) === 0 ? str_replace([','], ' ', mb_strtolower($website['Title'] . ' ' . $website['Description'] . ' ' . $website['FullDescription'])) : $website['SearchString']); ?></textarea>
                 </div>
                 <div class="row">
                     <div class="col col-sm-3 mb-3">

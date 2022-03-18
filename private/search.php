@@ -12,32 +12,29 @@ if (!$stop_search && $category > 0)
 {
     $categoryExists = $pdo->prepare("SELECT COUNT(*) AS n FROM categories WHERE Id = :id");
     $categoryExists->execute([':id' => $category]);
-    if ($categoryExists->fetch()['n'] != 1)
+    if ($categoryExists->fetch()['n'] == 1)
     {
-        header('Location: /');
-        exit;
+        $websites = $pdo->prepare("SELECT * FROM Websites
+            WHERE
+                Active = 1
+                AND CategoryId = ?
+                AND SearchString LIKE ?
+        ORDER BY Id DESC");
+        $websites->execute([$category, '%' . mb_strtolower($search_for) . '%']);
     }
-
-    $websites = $pdo->prepare("SELECT * FROM Websites
-        WHERE
-            Active = 1
-            AND CategoryId = ?
-            AND (Title LIKE ?
-                OR Description LIKE ?
-                OR Url LIKE ?)
-    ORDER BY Id DESC");
-    $websites->execute([$category, '%' . $search_for . '%', '%' . $search_for . '%', '%' . $search_for . '%']);
+    else
+    {
+        $websites = [];
+    }
 }
 else if (!$stop_search)
 {
     $websites = $pdo->prepare("SELECT * FROM Websites
     WHERE
         Active = 1
-        AND (Title LIKE ?
-            OR Description LIKE ?
-            OR Url LIKE ?)
+        AND SearchString LIKE ?
     ORDER BY Id DESC");
-    $websites->execute(['%' . $search_for . '%', '%' . $search_for . '%', '%' . $search_for . '%']);
+    $websites->execute(['%' . mb_strtolower($search_for) . '%']);
 }
 
 $has_results = false;

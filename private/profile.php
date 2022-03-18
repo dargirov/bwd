@@ -222,7 +222,15 @@ if ($submit === 1 && $edit_id > 0)
                 else
                 {
                 ?>
-                Полетата означени със * са задължителни
+                <ul class="rules">
+                    <li>Полетата означени със * са задължителни.</li>
+                    <li>Използвайте кирилица за да въведете информацията.</li>
+                    <li>Използването на html или друг вид код не е разрешено.</li>
+                    <li>Забранено е добавяне на сайтове, които нарушават законите на Република България.</li>
+                    <li>Забранено е добавяне на сайтове с порнографско съдържание.</li>
+                    <li>Добавяйте само български сайтове.</li>
+                    <li>Екипът на bgwebdir има правото да не одобри сайта, или да го премахне без предварително предупреждение.</li>
+                </ul>
                 <form method="post" action="/profile?edit=<?php echo $edit_id; ?>">
                     <table>
                         <tr>
@@ -372,7 +380,13 @@ if ($submit === 1 && $edit_id > 0)
                 {
                 ?>
                     <tr>
-                        <td><?php echo $website['Title']; ?><br><?php echo $website['Url']; ?></td>
+                        <td>
+                            <ul>
+                                <li><?php echo $website['Title']; ?></li>
+                                <li><img src="/images/www.svg" alt="уеб сайт"> <?php echo $website['Url']; ?></li>
+                                <li><img src="/images/status-warning.svg" alt="уеб сайт"> <?php echo $website['Active'] == 1 ? 'Активен' : 'Чака одобрение'; ?></li>
+                            </ul>
+                        </td>
                         <td><a href="/profile?edit=<?php echo $website['Id']; ?>" class="btn">Редактирай</a></td>
                     </tr>
                 <?php

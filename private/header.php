@@ -4,11 +4,23 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?php echo isset($page_title) ? $page_title : ''; ?></title>
+        <?php
+        if (isset($page_description) && mb_strlen($page_description) > 0)
+        {
+            echo '<meta name="description" content="'. htmlspecialchars($page_description) . '">';
+        }
+        ?>
+
+        <base href="http://bgwebdir.eu/">
         <link rel="stylesheet" href="/css/main.css?v=<?php echo APP_VERSION; ?>">
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
     <body>
-        <!-- https://colorhunt.co/palette/c6d57ed57e7ea2cdcdffe1af -->
+        <?php
+        /*
+        https://colorhunt.co/palette/c6d57ed57e7ea2cdcdffe1af
+        */
+        ?>
         <header>
             <div id="header-desktop">
                 <div id="logo-container"><a href="/"><img src="/images/logo.png"></a></div>
@@ -87,7 +99,16 @@
                             }
                             ?>
                         </select>
-                        <a href=""><img src="/images/search.svg"> Търси</a>
+                        <a href="">
+                            <svg width="14px" height="14px" x="0px" y="0px" viewBox="0 0 487.95 487.95" style="enable-background:new 0 0 487.95 487.95;">
+                                <g>
+                                    <path d="M481.8,453l-140-140.1c27.6-33.1,44.2-75.4,44.2-121.6C386,85.9,299.5,0.2,193.1,0.2S0,86,0,191.4s86.5,191.1,192.9,191.1
+                                        c45.2,0,86.8-15.5,119.8-41.4l140.5,140.5c8.2,8.2,20.4,8.2,28.6,0C490,473.4,490,461.2,481.8,453z M41,191.4
+                                        c0-82.8,68.2-150.1,151.9-150.1s151.9,67.3,151.9,150.1s-68.2,150.1-151.9,150.1S41,274.1,41,191.4z"/>
+                                </g>
+                            </svg>
+                            Търси
+                        </a>
                     </form>
                 </div>
             </div>

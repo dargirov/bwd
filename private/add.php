@@ -219,7 +219,15 @@ if ($submit === 1 && $user_logged_in)
             else
             {
             ?>
-            Полетата означени със * са задължителни
+            <ul class="rules">
+                <li>Полетата означени със * са задължителни.</li>
+                <li>Използвайте кирилица за да въведете информацията.</li>
+                <li>Използването на html или друг вид код не е разрешено.</li>
+                <li>Забранено е добавяне на сайтове, които нарушават законите на Република България.</li>
+                <li>Забранено е добавяне на сайтове с порнографско съдържание.</li>
+                <li>Добавяйте само български сайтове.</li>
+                <li>Екипът на bgwebdir има правото да не одобри сайта, или да го премахне без предварително предупреждение.</li>
+            </ul>
             <form method="post" action="/add">
                 <table>
                     <tr>
@@ -241,7 +249,8 @@ if ($submit === 1 && $user_logged_in)
                                 <?php
                                 foreach($categories as $c)
                                 {
-                                    echo '<option value="' . $c['Id'] . '">' . $c['Name'] . '</option>';
+                                    $selected = $category == $c['Id'] ? ' selected="selected"' : '';
+                                    echo '<option value="' . $c['Id'] . '" ' . $selected . '>' . $c['Name'] . '</option>';
                                 }
                                 ?>
                             </select>
@@ -297,7 +306,8 @@ if ($submit === 1 && $user_logged_in)
                                 <?php
                                 foreach($cities as $c)
                                 {
-                                    echo '<option value="' . $c['Id'] . '">' . $c['Name'] . ' (' . $c['PostCode'] . ')</option>';
+                                    $selected = $city == $c['Id'] ? ' selected="selected"' : '';
+                                    echo '<option value="' . $c['Id'] . '" ' . $selected . '>' . $c['Name'] . ' (' . $c['PostCode'] . ')</option>';
                                 }
                                 ?>
                             </select>

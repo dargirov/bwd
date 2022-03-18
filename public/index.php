@@ -5,6 +5,9 @@
 error_reporting(0);
 ini_set('display_errors', 0);
 
+ini_set('session.gc_maxlifetime', 3600);
+session_set_cookie_params(3600);
+
 session_start();
 
 define('PATH_TO_PRIVATE', '../private/');
@@ -34,24 +37,31 @@ switch ($page)
         $page_name = 'website.php';
         if (mb_strlen($acronym) < 3 || mb_strlen($acronym) > 500)
         {
+            $page_title = '404 страницата не е намерена';
             header('HTTP/1.0 404 Not Found');
             $page_name = '404.php';
         }
-
-        $website_q = $pdo->prepare("SELECT * FROM Websites WHERE Acronym = :acronym");
-        $website_q->execute([':acronym' => $acronym]);
-        $website = $website_q->fetch();
-        if ($website === false || !is_array($website))
+        else
         {
-            header('HTTP/1.0 404 Not Found');
-            $page_name = '404.php';
+            $website_q = $pdo->prepare("SELECT * FROM Websites WHERE Acronym = :acronym");
+            $website_q->execute([':acronym' => $acronym]);
+            $website = $website_q->fetch();
+            if ($website === false || !is_array($website))
+            {
+                $page_title = '404 страницата не е намерена';
+                header('HTTP/1.0 404 Not Found');
+                $page_name = '404.php';
+            }
+            else
+            {
+                $page_title = htmlspecialchars($website['Title']);
+            }
         }
-
-        $page_title = htmlspecialchars($website['Title']);
 
         break;
     case 'add':
-        $page_title = 'Добави безплатно фирма и сайт';
+        $page_title = 'Добави безплатно сайт и данни за контакт';
+        $page_description = 'Безплатно добавяне на сайт, кратка информация и данни за контакт';
         $page_name = 'add.php';
         if (!array_key_exists('loggedin', $_SESSION) || $_SESSION['loggedin'] !== 1)
         {
@@ -63,20 +73,26 @@ switch ($page)
         $page_name = 'category.php';
         if (mb_strlen($acronym) < 3 || mb_strlen($acronym) > 500)
         {
+            $page_title = '404 страницата не е намерена';
             header('HTTP/1.0 404 Not Found');
             $page_name = '404.php';
         }
-
-        $category = $pdo->prepare("SELECT * FROM Categories WHERE Acronym = :acronym");
-        $category->execute([':acronym' => $acronym]);
-        $category_data = $category->fetch();
-        if ($category_data === false)
+        else
         {
-            header('HTTP/1.0 404 Not Found');
-            $page_name = '404.php';
+            $category = $pdo->prepare("SELECT * FROM Categories WHERE Acronym = :acronym");
+            $category->execute([':acronym' => $acronym]);
+            $category_data = $category->fetch();
+            if ($category_data === false)
+            {
+                $page_title = '404 страницата не е намерена';
+                header('HTTP/1.0 404 Not Found');
+                $page_name = '404.php';
+            }
+            else
+            {
+                $page_title = htmlspecialchars($category_data['Name']);
+            }
         }
-
-        $page_title = htmlspecialchars($category_data['Name']);
 
         break;
     case 'auth':
@@ -98,22 +114,32 @@ switch ($page)
 
         if (!array_key_exists('loggedin', $_SESSION) || $_SESSION['loggedin'] !== 1)
         {
+            $page_title = '404 страницата не е намерена';
             header('HTTP/1.0 404 Not Found');
             $page_name = '404.php';
         }
+        else
+        {
+            $page_title = 'Профил - ' . $_SESSION['loggedin_email'];
+        }
 
-        $page_title = 'Профил - ' . $_SESSION['loggedin_email'];
         break;
     case 'sitemap.xml':
         $page_name = 'sitemap.php';
         $add_header_footer = false;
         break;
+    case 'robots.txt':
+        $page_name = 'robots.php';
+        $add_header_footer = false;
+        break;
     default:
-        $page_title = 'Списък с линкове към фирми в България';
+        $page_title = 'Каталог с web сайтове в България';
+        $page_description = 'Списък с български сайтове и кратка информация. Безплатно добавяне.';
         $page_name = 'home.php';
         $class_active_home = true;
         if ($page !== null)
         {
+            $page_title = '404 страницата не е намерена';
             header('HTTP/1.0 404 Not Found');
             $page_name = '404.php';
         }

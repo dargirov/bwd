@@ -13,10 +13,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
     mobileNavBtn.onclick = function(e) {
         if (!mobileNavOpened) {
             this.classList.add('open');
-            mobileNavHeader.style.width = '300px';
+            mobileNavHeader.style.height = '400px';
         } else {
             this.classList.remove('open');
-            mobileNavHeader.style.width = 0;
+            mobileNavHeader.style.height = 0;
         }
 
         mobileNavOpened = !mobileNavOpened;
@@ -197,5 +197,22 @@ window.addEventListener('DOMContentLoaded', (event) => {
         document.body.appendChild(divOverlay);
         return false;
     }
+
+    var topA = document.querySelector('#top a');
+    topA.onclick = function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return false;
+    }
+
+    var top = document.getElementById('top');
+    window.addEventListener('scroll', function(){
+        var st = window.pageYOffset || document.documentElement.scrollTop;
+        if (st > 300) {
+            top.classList.remove('hidden');
+        } else {
+            top.classList.add('hidden');
+        }
+     }, false);
 
 });

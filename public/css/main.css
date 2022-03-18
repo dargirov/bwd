@@ -95,7 +95,8 @@ body > nav > div {
     background-color: #fcc973;
 }
 
-#search form img {
+#search form svg {
+    width: 14px;
     height: 14px;
     margin-right: 5px;
     margin-bottom: 1px;
@@ -178,7 +179,7 @@ body > main > div {
     display: inline-block;
     margin-bottom: 10px;
     text-decoration: underline;
-    font-size: 15px;
+    font-size: 16px;
     color: #333;
 }
 
@@ -188,7 +189,7 @@ body > main > div {
 
 #main-left ul li span {
     display: block;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 body > footer {
@@ -392,14 +393,22 @@ body > footer a {
 
 #index-error-container > div, #index-success-container > div {
     width: 1100px;
-    background-color: red;
+    background-color: #D57E7E;
     padding: 20px;
     box-sizing: border-box;
     color: #fff;
 }
 
 #index-success-container > div {
-    background-color: green;
+    background-color: #C6D57E;
+}
+
+.success-inline {
+    background-color: #C6D57E;
+    color: #fff;
+    padding: 15px;
+    font-size: 14px;
+    box-sizing: border-box;
 }
 
 .city {
@@ -440,7 +449,7 @@ body > footer a {
 }
 
 .user-profile > div:first-of-type {
-    border: 1px dashed #fff;
+    border: 1px solid #e9e9ed;
     padding: 10px;
     background-color: #e6e6e7;
     margin-bottom: 10px;
@@ -520,6 +529,51 @@ body > footer a {
     text-align: center;
 }
 
+#profile-edit-sites ul li {
+    margin: 0;
+}
+
+#profile-edit-sites li img {
+    width: 14px;
+    height: 14px;
+}
+
+.rules {
+    background-color: #A2CDCD;
+    padding: 10px 10px 10px 20px;
+    color: #fff;
+    font-size: 14px;
+    list-style-type: disc !important;
+}
+
+.rules li {
+    margin: 5px 0 !important;
+}
+
+#top {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background-color: #D57E7E;
+    z-index: 10;
+}
+
+#top a {
+    display: block;
+    padding: 5px;
+}
+
+#top svg {
+    display: block;
+    width: 36px;
+    height: 36px;
+}
+
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+
 @media all and (max-width: 1000px) {
 
     #header-desktop {
@@ -528,8 +582,8 @@ body > footer a {
 
     #header-mobile {
         display: block;
-        width: 0;
-        height: 100%;
+        width: 100%;
+        height: 0;
         overflow: hidden;
         transition: .5s ease-in-out;
         position: absolute;
@@ -558,6 +612,7 @@ body > footer a {
 
     body > header {
         justify-content: flex-start;
+        height: 60px;
     }
 
     #nav-icon1 {
@@ -582,10 +637,10 @@ body > footer a {
     #nav-icon1 span {
         display: block;
         position: absolute;
-        height: 9px;
+        height: 7px;
         width: 100%;
         background: #f3d251;
-        border-radius: 9px;
+        border-radius: 7px;
         opacity: 1;
         left: 0;
         -webkit-transform: rotate(0deg);
@@ -603,11 +658,11 @@ body > footer a {
     }
 
     #nav-icon1 span:nth-child(2) {
-        top: 18px;
+        top: 15px;
     }
 
     #nav-icon1 span:nth-child(3) {
-        top: 36px;
+        top: 30px;
     }
 
     #nav-icon1.open span:nth-child(1) {
@@ -631,6 +686,11 @@ body > footer a {
         transform: rotate(-135deg);
     }
 
+    body > nav {
+        box-shadow: none;
+        padding-top: 30px;
+    }
+
     body > nav > div {
         width: 100%;
     }
@@ -652,11 +712,18 @@ body > footer a {
 
     #search form a {
         height: 48px;
+        border: 1px solid #e9e9ed;
+        box-sizing: border-box;
     }
 
     #search input, #search select {
         border-right: 1px solid #e9e9ed;
         height: 48px;
+    }
+
+    #search select {
+        border-top: 0;
+        border-bottom: 0;
     }
 
     body > main > div {
@@ -737,6 +804,10 @@ body > footer a {
     }
 
     #not-found-container > div {
+        width: 100%;
+    }
+
+    #index-error-container > div, #index-success-container > div {
         width: 100%;
     }
 

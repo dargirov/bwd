@@ -18,7 +18,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     {
     ?>
     <url>
-        <loc>http://bgwebdir.eu/site/<?php echo $website['Acronym']; ?></loc>
+        <loc>http://bgwebdir.eu/site/<?php echo urlencode($website['Acronym']); ?></loc>
     </url>
     <?php
     }
