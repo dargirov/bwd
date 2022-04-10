@@ -57,7 +57,7 @@ $websites = $pdo->query("SELECT * FROM Websites WHERE Active = 1 ORDER BY Id DES
 </main>
 <section id="category-list">
     <div>
-        <strong>Категории</strong>
+        <h3>Категории</h3>
         <ul>
             <?php
             $header_categories = $pdo->query("SELECT * FROM categories ORDER BY Name ASC");

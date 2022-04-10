@@ -140,8 +140,8 @@ switch ($page)
         $add_header_footer = false;
         break;
     default:
-        $page_title = 'Каталог с web сайтове в България';
-        $page_description = 'Списък с български сайтове и кратка информация. Безплатно добавяне.';
+        $page_title = 'Каталог с web сайтове в България. Безплатно добавяне.';
+        $page_description = 'Списък с български сайтове и кратка информация. Добави своя линк безплатно.';
         $page_name = 'home.php';
         $class_active_home = true;
         if ($page !== null)

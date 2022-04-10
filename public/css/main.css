@@ -300,8 +300,7 @@ body > footer a {
     padding: 5px;
 }
 
-#category-list strong {
-    display: block;
+#category-list h3 {
     margin-bottom: 10px;
     font-size: 19px;
 }

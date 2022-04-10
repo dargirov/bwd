@@ -29,15 +29,15 @@
         ?>
         <header>
             <div id="header-desktop">
-                <div id="logo-container"><a href="/"><img src="/images/logo.png"></a></div>
+                <div id="logo-container"><a href="/"><img src="/images/logo.png" alt="BGWebDir лого"></a></div>
                 <?php
                 if (!array_key_exists('loggedin', $_SESSION) || $_SESSION['loggedin'] !== 1)
                 {
                 ?>
                     <div>
-                        <a href="/add" class="btn btn-site-register"><img src="/images/add.svg" alt="Добави сайт"> Добави сайт безплатно</a>
-                        <a href="#" class="btn btn-log-reg login-popup"><img src="/images/user.svg"> Вход</a>
-                        <a href="#" class="btn btn-log-reg register-popup"><img src="/images/user.svg"> Регистрация</a>
+                        <a href="/add" class="btn btn-site-register"><img src="/images/add.svg" width="20" height="20" alt="Добави сайт"> Добави сайт безплатно</a>
+                        <a href="#" class="btn btn-log-reg login-popup"><img src="/images/user.svg" width="20" height="20" alt="Вход в сайта"> Вход</a>
+                        <a href="#" class="btn btn-log-reg register-popup"><img src="/images/user.svg" width="20" height="20" alt="Регистрация"> Регистрация</a>
                     </div>
                 <?php
                 }
@@ -45,9 +45,9 @@
                 {
                 ?>
                     <div>
-                        <a href="/add" class="btn btn-site-register"><img src="/images/add.svg" alt="Добави сайт"> Добави сайт безплатно</a>
-                        <a href="/profile" class="btn btn-log-reg"><img src="/images/user.svg"> Профил</a>
-                        <a href="/auth?l=1" class="btn btn-log-reg"><img src="/images/exit.svg">Изход</a>
+                        <a href="/add" class="btn btn-site-register"><img src="/images/add.svg" width="20" height="20" alt="Добави сайт">Добави сайт безплатно</a>
+                        <a href="/profile" class="btn btn-log-reg"><img src="/images/user.svg" width="20" height="20" alt="Преглед на профил">Профил</a>
+                        <a href="/auth?l=1" class="btn btn-log-reg"><img src="/images/exit.svg" width="20" height="20" alt="Изход от профила">Изход</a>
                     </div>
                 <?php
                 }
