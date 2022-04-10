@@ -1,18 +1,24 @@
 <?php
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
-error_reporting(0);
-ini_set('display_errors', 0);
+
+define('PATH_TO_PRIVATE', '../private/');
+include_once PATH_TO_PRIVATE . 'config.php';
+
+if (IS_DEV)
+{
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+}
+else
+{
+    error_reporting(0);
+    ini_set('display_errors', 0);
+}
 
 ini_set('session.gc_maxlifetime', 3600);
 session_set_cookie_params(3600);
-
 session_start();
-
-define('PATH_TO_PRIVATE', '../private/');
-
-include_once PATH_TO_PRIVATE . 'config.php';
 
 $page = filter_input(INPUT_GET, 'page');
 $acronym = null;
@@ -54,7 +60,8 @@ switch ($page)
             }
             else
             {
-                $page_title = htmlspecialchars($website['Title']);
+                $page_title = $website['Title'];
+                $page_description = $website['PageDescription'];
             }
         }
 
@@ -90,7 +97,7 @@ switch ($page)
             }
             else
             {
-                $page_title = htmlspecialchars($category_data['Name']);
+                $page_title = $category_data['Name'];
             }
         }
 

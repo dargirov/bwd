@@ -38,6 +38,8 @@ if ($action === 'edit' && $id > 0)
     $address = filter_input(INPUT_POST, 'address');
     $phone = filter_input(INPUT_POST, 'phone');
     $email = filter_input(INPUT_POST, 'email');
+    $page_description = filter_input(INPUT_POST, 'page_description');
+    $rel = filter_input(INPUT_POST, 'rel');
 
     $update_query = $pdo->prepare("UPDATE Websites SET
         Title = :title,
@@ -50,7 +52,9 @@ if ($action === 'edit' && $id > 0)
         CityId = :city,
         Address = :address,
         Phone = :phone,
-        Email = :email
+        Email = :email,
+        PageDescription = :page_description,
+        Rel = :rel
         Where Id = :id");
     $update_query->bindParam(':title', $title);
     $update_query->bindParam(':acronym', $acronym);
@@ -63,6 +67,8 @@ if ($action === 'edit' && $id > 0)
     $update_query->bindParam(':address', $address);
     $update_query->bindParam(':phone', $phone);
     $update_query->bindParam(':email', $email);
+    $update_query->bindParam(':page_description', $page_description);
+    $update_query->bindParam(':rel', $rel);
     $update_query->bindParam(':id', $id);
     $update_result = $update_query->execute();
     if (!$update_result)
@@ -104,21 +110,42 @@ if ($id > 0)
                         </select>
                     </div>
                 </div>
-                <div class="col mb-3">
+                <div class="row">
+                    <div class="col mb-3">
                         <label for="acronym" class="form-label">Acronym</label>
                         <input type="text" class="form-control" id="acronym" name="acronym" value="<?php echo $website['Acronym']; ?>">
                     </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea name="description" class="form-control" id="description" style="height: 100px;"><?php echo htmlspecialchars($website['Description']); ?></textarea>
+                    <div class="col mb-3">
+                        <label for="rel" class="form-label">Rel</label>
+                        <select name="rel" class="form-select" id="rel">
+                            <option value="0" <?php echo $website['Rel'] == 0 ? ' selected' : ''; ?>>----</option>
+                            <option value="1" <?php echo $website['Rel'] == 1 ? ' selected' : ''; ?>>nofollow</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="full_description" class="form-label">Full Description</label>
-                    <textarea name="full_description" class="form-control" id="full_description" style="height: 200px;"><?php echo htmlspecialchars($website['FullDescription']); ?></textarea>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="description" class="form-control" id="description" style="height: 100px;"><?php echo htmlspecialchars($website['Description']); ?></textarea>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="search_string" class="form-label">Search string</label>
-                    <textarea name="search_string" class="form-control" id="search_string" style="height: 200px;"><?php echo htmlspecialchars(mb_strlen($website['SearchString']) === 0 ? str_replace([','], ' ', mb_strtolower($website['Title'] . ' ' . $website['Description'] . ' ' . $website['FullDescription'])) : $website['SearchString']); ?></textarea>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="full_description" class="form-label">Full Description</label>
+                        <textarea name="full_description" class="form-control" id="full_description" style="height: 200px;"><?php echo htmlspecialchars($website['FullDescription']); ?></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="search_string" class="form-label">Search string</label>
+                        <textarea name="search_string" class="form-control" id="search_string" style="height: 200px;"><?php echo htmlspecialchars(mb_strlen($website['SearchString']) === 0 ? str_replace([','], ' ', mb_strtolower($website['Title'] . ' ' . $website['Description'] . ' ' . $website['FullDescription'] . ' ' . $website['Url'])) : $website['SearchString']); ?></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="page_description" class="form-label">Page description</label>
+                        <textarea name="page_description" class="form-control" id="page_description" style="height: 100px;"><?php echo htmlspecialchars($website['PageDescription']); ?></textarea>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col col-sm-3 mb-3">

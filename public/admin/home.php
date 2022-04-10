@@ -20,6 +20,22 @@ if ($activate !== false && $activate !== null && $activate > 0)
     $activate_query->execute();
 }
 
+$contact_delete = filter_input(INPUT_GET, 'contact_delete', FILTER_VALIDATE_INT);
+if ($contact_delete !== false && $contact_delete !== null && $contact_delete > 0)
+{
+    $contact_delete_query = $pdo->prepare("DELETE FROM Contacts WHERE Id = :id");
+    $contact_delete_query->bindParam(':id', $contact_delete);
+    $contact_delete_query->execute();
+}
+
+$contact_seen = filter_input(INPUT_GET, 'contact_seen', FILTER_VALIDATE_INT);
+if ($contact_seen !== false && $contact_seen !== null && $contact_seen > 0)
+{
+    $contact_seen_query = $pdo->prepare("UPDATE Contacts SET Seen = 1 WHERE Id = :id");
+    $contact_seen_query->bindParam(':id', $contact_seen);
+    $contact_seen_query->execute();
+}
+
 $add_category = filter_input(INPUT_POST, 'add_category', FILTER_VALIDATE_INT);
 $category_name = trim(filter_input(INPUT_POST, 'category_name'));
 $category_acronym = trim(filter_input(INPUT_POST, 'category_acronym'));
@@ -114,6 +130,7 @@ include_once '../../private/admin/header.php';
                     <th scope="col">Email</th>
                     <th scope="col">Коментар</th>
                     <th scope="col">Дата</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -121,11 +138,17 @@ include_once '../../private/admin/header.php';
             foreach ($contacts as $contact)
             {
             ?>
-                <tr>
+                <tr class="<?php echo $contact['Seen'] == 0 ? 'table-warning' : ''; ?>">
                     <td><?php echo $contact['Id']; ?></td>
                     <td><?php echo $contact['Email']; ?></td>
                     <td><?php echo $contact['Content']; ?></td>
                     <td><?php echo $contact['DateCreated']; ?></td>
+                    <td>
+                        <div class="btn-group-vertical btn-group-sm" role="group">
+                            <a href="/admin/home.php?contact_delete=<?php echo $contact['Id']; ?>" class="btn btn-outline-primary">Изтрии</a>
+                            <a href="/admin/home.php?contact_seen=<?php echo $contact['Id']; ?>" class="btn btn-outline-primary">Видяно</a>
+                        </div>
+                    </td>
                 </tr>
             <?php
             }

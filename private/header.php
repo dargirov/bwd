@@ -3,7 +3,14 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><?php echo isset($page_title) ? $page_title : ''; ?></title>
+        <?php
+        if (IS_PROD)
+        {
+            echo '<base href="http://bgwebdir.eu/">';
+        }
+        ?>
+
+        <title><?php echo isset($page_title) && mb_strlen($page_title) ? htmlspecialchars($page_title) : ''; ?></title>
         <?php
         if (isset($page_description) && mb_strlen($page_description) > 0)
         {
@@ -11,9 +18,8 @@
         }
         ?>
 
-        <base href="http://bgwebdir.eu/">
         <link rel="stylesheet" href="/css/main.css?v=<?php echo APP_VERSION; ?>">
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://www.google.com/recaptcha/api.js?hl=bg" async defer></script>
     </head>
     <body>
         <?php

@@ -28,8 +28,10 @@ $error_city = '';
 $error_address = '';
 $error_phone = '';
 $error_email = '';
+$error_captcha = '';
 $has_error = false;
 $success = false;
+$error = false;
 
 $user_logged_in = array_key_exists('loggedin', $_SESSION) && $_SESSION['loggedin'] === 1;
 
@@ -191,8 +193,13 @@ if ($submit === 1 && $user_logged_in)
             $success = $insert->execute();
             if (!$success)
             {
-                var_dump($pdo->errorInfo(), $pdo->errorCode());
+                // var_dump($pdo->errorInfo(), $pdo->errorCode());
+                $error = true;
             }
+        }
+        else
+        {
+            $error_captcha = 'Кликнете върху чекбокса в кутията';
         }
     }
 }
@@ -209,6 +216,12 @@ if ($submit === 1 && $user_logged_in)
                 Информацията е добавена успешно. Имайте предвид, че всяка страница се валидира ръчно, което може да отнеме няколко работни дни.
             <?php
             }
+            else if ($error)
+            {
+            ?>
+                Възникна грешка при добавяне. Моля, опитайте по-късно или ни уведомете чрез формата за контакти.
+            <?php
+            }
             else if (!$user_logged_in)
             {
             ?>
@@ -222,9 +235,8 @@ if ($submit === 1 && $user_logged_in)
             <ul class="rules">
                 <li>Полетата означени със * са задължителни.</li>
                 <li>Използвайте кирилица за да въведете информацията.</li>
-                <li>Използването на html или друг вид код не е разрешено.</li>
-                <li>Забранено е добавяне на сайтове, които нарушават законите на Република България.</li>
-                <li>Забранено е добавяне на сайтове с порнографско съдържание.</li>
+                <li>Използването на html, javascript или друг вид код не е разрешено.</li>
+                <li>Забранено е добавяне на сайтове, които нарушават законите на Република България, имат порнографско или расистко съдържание.</li>
                 <li>Добавяйте само български сайтове.</li>
                 <li>Екипът на bgwebdir има правото да не одобри сайта, или да го премахне без предварително предупреждение.</li>
             </ul>
@@ -246,6 +258,7 @@ if ($submit === 1 && $user_logged_in)
                         <td>Категория *</td>
                         <td>
                             <select name="category">
+                                <option value="">----</option>
                                 <?php
                                 foreach($categories as $c)
                                 {
@@ -357,7 +370,15 @@ if ($submit === 1 && $user_logged_in)
                     </tr>
                     <tr>
                         <td></td>
-                        <td><div class="g-recaptcha" data-sitekey="<?php echo RECAPTCHA_SITE_KEY; ?>" data-size="compact"></div></td>
+                        <td>
+                            <div class="g-recaptcha" data-sitekey="<?php echo RECAPTCHA_SITE_KEY; ?>" data-size="compact"></div>
+                            <?php
+                            if (mb_strlen($error_captcha) > 0)
+                            {
+                                echo '<span class="error">' . $error_captcha . '</span>';
+                            }
+                            ?>
+                        </td>
                     </tr>
                     <tr>
                         <td></td>

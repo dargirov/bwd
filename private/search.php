@@ -48,7 +48,7 @@ $has_results = false;
             if (!$stop_search)
             {
             ?>
-                <ul>
+                <ul class="website-card">
                     <?php
                     foreach ($websites as $website)
                     {

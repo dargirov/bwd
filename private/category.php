@@ -7,8 +7,8 @@ $websites->execute([':category' => $category_data['Id']]);
 <main class="main-form">
     <div>
         <div id="main-left">
-            <strong><?php echo $category_data['Name']; ?></strong>
-            <ul>
+            <strong>Категория <?php echo $category_data['Name']; ?></strong>
+            <ul class="website-card">
                 <?php
                 foreach ($websites as $website)
                 {

@@ -144,7 +144,15 @@ body > main > div {
 #main-right > div {
     margin: 20px;
     padding: 10px;
-    background-color: #e6e6e7;
+    background-color: #e4e4e4;
+}
+
+#main-right > div.dark {
+    background-color: #333;
+}
+
+#main-right > div.dark a {
+    color: #e4e4e4;
 }
 
 #main-left {
@@ -154,9 +162,13 @@ body > main > div {
 
 #main-left strong, #main-left h1 {
     display: block;
-    font-size: 18px;
+    font-size: 19px;
     margin-bottom: 10px;
     margin-top: 10px;
+}
+
+strong.section-heading, h1.section-heading {
+    margin-top: 30px !important;
 }
 
 #main-left strong:first-of-type, #main-left h1:first-of-type {
@@ -167,29 +179,29 @@ body > main > div {
     font-size: 20px;
 }
 
-#main-left ul {
+.website-card {
     list-style-type: none;
 }
 
-#main-left ul li {
+.website-card li {
     margin-bottom: 20px;
 }
 
-#main-left ul li a {
+.website-card li a {
     display: inline-block;
     margin-bottom: 10px;
     text-decoration: underline;
-    font-size: 16px;
+    font-size: 17px;
     color: #333;
 }
 
-#main-left ul li a:hover {
+.website-card li a:hover {
     text-decoration: none;
 }
 
-#main-left ul li span {
+.website-card li span {
     display: block;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 body > footer {
@@ -197,8 +209,9 @@ body > footer {
     justify-content: center;
     background-color: #e6e6e7;
     margin-top: 30px;
-    padding: 20px;
-    font-size: 13px;
+    padding: 30px;
+    font-size: 14px;
+    line-height: 22px;
 }
 
 body > footer > div {
@@ -213,7 +226,7 @@ body > footer > div > div {
 
 body > footer strong {
     display: block;
-    font-size: 14px;
+    font-size: 15px;
     margin-bottom: 5px;
 }
 
@@ -277,7 +290,7 @@ body > footer a {
     width: 1100px;
 }
 
-#category-list ul {
+#category-list ul, #category-highlight-list {
     display: flex;
     flex-wrap: wrap;
     list-style-type: none;
@@ -290,18 +303,23 @@ body > footer a {
 #category-list strong {
     display: block;
     margin-bottom: 10px;
-    font-size: 16px;
+    font-size: 19px;
 }
 
-#category-list img {
+#category-list img, #category-highlight-list img {
     width: 12px;
     height: 12px;
 }
 
-#category-list a {
+#category-list a, #category-highlight-list a {
+    display: block;
     color: #333;
     text-decoration: none;
     font-size: 14px;
+}
+
+#category-highlight-list li {
+    padding-right: 20px;
 }
 
 #logo-container {
@@ -316,7 +334,7 @@ body > footer a {
     display: none;
 }
 
-#overlay {
+#overlay, #menu-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -324,6 +342,10 @@ body > footer a {
     height: 100%;
     background-color: rgba(178, 178, 178, 0.6);
     z-index: 15;
+}
+
+#menu-overlay {
+    z-index: 9;
 }
 
 #popup {
@@ -464,6 +486,10 @@ body > footer a {
     text-align: right;
 }
 
+#profile-edit-sites ul {
+    list-style-type: none;
+}
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -543,11 +569,11 @@ body > footer a {
     padding: 10px 10px 10px 20px;
     color: #fff;
     font-size: 14px;
-    list-style-type: disc !important;
+    list-style-type: disc;
 }
 
 .rules li {
-    margin: 5px 0 !important;
+    margin: 5px 0;
 }
 
 #top {
@@ -574,6 +600,61 @@ body > footer a {
     visibility: hidden;
 }
 
+#front-banner {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+#front-banner > div {
+    display: flex;
+    width: 1100px;
+    background-color: #FFE1AF47;
+    padding: 30px 0;
+}
+
+#front-banner > div > div {
+    width: 50%;
+}
+
+#front-banner > div > div:first-of-type {
+    text-align: center;
+}
+
+#front-banner > div > div:first-of-type img {
+    width: 300px;
+    height: 300px;
+    opacity: 0.7;
+}
+
+#front-banner h1 {
+    text-align: center;
+    font-size: 34px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+#front-banner ul {
+    list-style-type: none;
+}
+
+#front-banner ul li {
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+#front-banner ul li:last-of-type {
+    margin: 0;
+}
+
+.ext-link {
+    text-align: center;
+}
+
+.ext-link a {
+    display: block;
+}
+
 @media all and (max-width: 1000px) {
 
     #header-desktop {
@@ -592,13 +673,13 @@ body > footer a {
     }
 
     #header-mobile nav {
-        margin: 80px 0 80px 20px;
+        margin: 80px 20px 80px 20px;
     }
 
     #header-nav-mobile {
-        width: 230px;
         overflow: hidden;
         list-style-type: none;
+        text-align: center;
     }
 
     #header-nav-mobile a {
@@ -611,7 +692,7 @@ body > footer a {
     }
 
     body > header {
-        justify-content: flex-start;
+        justify-content: flex-end;
         height: 60px;
     }
 
@@ -621,7 +702,7 @@ body > footer a {
         height: 45px;
         position: relative;
         top: 10px;
-        left: 10px;
+        right: 10px;
         -webkit-transform: rotate(0deg);
         -moz-transform: rotate(0deg);
         -o-transform: rotate(0deg);
@@ -714,6 +795,7 @@ body > footer a {
         height: 48px;
         border: 1px solid #e9e9ed;
         box-sizing: border-box;
+        background-color: #A2CDCD;
     }
 
     #search input, #search select {
@@ -729,6 +811,7 @@ body > footer a {
     body > main > div {
         flex-direction: column;
         width: 100%;
+        background-color: #A2CDCD;
     }
 
     #category-list > div {
@@ -809,6 +892,42 @@ body > footer a {
 
     #index-error-container > div, #index-success-container > div {
         width: 100%;
+    }
+
+    #front-banner > div {
+        width: 100%;
+        background-color: #C6D57E;
+    }
+
+    #front-banner > div > div {
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    #front-banner > div > div:first-of-type {
+        display: none;
+    }
+
+    #category-list ul, #category-highlight-list {
+        display: initial;
+    }
+
+    #category-list ul li, #category-highlight-list li {
+        display: inline-block;
+    }
+
+    .rules {
+        background-color: #FFE1AF;
+        color: #333;
+    }
+
+    #main-left strong, #main-left h1 {
+        font-size: 21px;
+    }
+
+    #category-list a, #category-highlight-list a {
+        font-size: 16px;
+        padding: 3px 0;
     }
 
 }

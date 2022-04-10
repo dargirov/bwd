@@ -14,9 +14,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
         if (!mobileNavOpened) {
             this.classList.add('open');
             mobileNavHeader.style.height = '400px';
+            var divMenuOverlay = document.createElement('div');
+            divMenuOverlay.id = 'menu-overlay';
+            divMenuOverlay.onclick = function(e) {
+                mobileNavBtn.classList.remove('open');
+                mobileNavHeader.style.height = 0;
+                this.remove();
+                mobileNavOpened = false;
+                return false;
+            }
+            document.body.appendChild(divMenuOverlay);
         } else {
             this.classList.remove('open');
             mobileNavHeader.style.height = 0;
+            var divMenuOverlay = document.getElementById('menu-overlay');
+            if (divMenuOverlay !== null) {
+                divMenuOverlay.remove();
+            }
         }
 
         mobileNavOpened = !mobileNavOpened;

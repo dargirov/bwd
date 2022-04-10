@@ -58,11 +58,17 @@ $category = $category_q->fetch();
                     if (mb_strlen($website['Url']) > 0)
                     {
                         ?>
-                        <li><img src="/images/www.svg"> <a href="<?php echo $website['Url']; ?>" target="_blank"><?php echo $website['Url']; ?></a></li>
+                        <li><img src="/images/www.svg"> <a href="<?php echo $website['Url']; ?>" <?php echo $website['Rel'] == 1 ? 'rel="nofollow"' : ''; ?> target="_blank"><?php echo $website['Url']; ?></a></li>
                         <?php
                     }
                     ?>
                 </ul>
+            </div>
+            <div class="dark">
+                <div class="ext-link">
+                    <a href="https://mug3.eu" title="Поръчай чаша със снимки за подарък"><img src="/images/mug-dark.jpg" width="240" height="262" alt="Сайт за чаши със снимка"></a>
+                    <a href="https://mug3.eu" title="Чаша със снимки и надпис">Поръчай чаша със снимка за подарък или друг повод</a>
+                </div>
             </div>
         </div>
     </div>
