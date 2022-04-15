@@ -1,6 +1,7 @@
 <?php
 
 define('PATH_TO_PRIVATE', '../private/');
+define('PATH_TO_PUBLIC', './');
 include_once PATH_TO_PRIVATE . 'config.php';
 
 if (IS_DEV)
@@ -36,6 +37,40 @@ else if (count($page_components) > 2)
 
 $pdo = new PDO('sqlite:' . PATH_TO_PRIVATE . '/db/bgwebdir.db');
 $add_header_footer = true;
+
+// CSS & JS minifier
+// https://github.com/matthiasmullie/minify
+// https://ourcodeworld.com/articles/read/350/how-to-minify-javascript-and-css-using-php
+require_once PATH_TO_PRIVATE . 'libs/minify/src/Minify.php';
+require_once PATH_TO_PRIVATE . 'libs/minify/src/CSS.php';
+require_once PATH_TO_PRIVATE . 'libs/minify/src/JS.php';
+require_once PATH_TO_PRIVATE . 'libs/minify/src/Exception.php';
+require_once PATH_TO_PRIVATE . 'libs/minify/src/Exceptions/BasicException.php';
+require_once PATH_TO_PRIVATE . 'libs/minify/src/Exceptions/FileImportException.php';
+require_once PATH_TO_PRIVATE . 'libs/minify/src/Exceptions/IOException.php';
+require_once PATH_TO_PRIVATE . 'libs/path-converter/src/ConverterInterface.php';
+require_once PATH_TO_PRIVATE . 'libs/path-converter/src/Converter.php';
+
+use MatthiasMullie\Minify;
+
+if (ENABLE_CSS_JS_MINIFICATION)
+{
+    $minified_css_file = PATH_TO_PUBLIC . 'css/min/main.min.' . APP_VERSION . '.css';
+    if (!file_exists($minified_css_file))
+    {
+        $minifierCss = new Minify\CSS();
+        $minifierCss->add(PATH_TO_PUBLIC . 'css/main.css');
+        $minifierCss->minify($minified_css_file);
+    }
+
+    $minified_js_file = PATH_TO_PUBLIC . 'js/min/main.min.' . APP_VERSION . '.js';
+    if (!file_exists($minified_js_file))
+    {
+        $minifierJs = new Minify\JS();
+        $minifierJs->add(PATH_TO_PUBLIC . 'js/main.js');
+        $minifierJs->minify($minified_js_file);
+    }
+}
 
 switch ($page)
 {

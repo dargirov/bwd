@@ -18,7 +18,20 @@
         }
         ?>
 
+        <?php
+        if (ENABLE_CSS_JS_MINIFICATION)
+        {
+        ?>
+        <link rel="stylesheet" href="/css/min/main.min.<?php echo APP_VERSION; ?>.css">
+        <?php
+        }
+        else
+        {
+        ?>
         <link rel="stylesheet" href="/css/main.css?v=<?php echo APP_VERSION; ?>">
+        <?php
+        }
+        ?>
         <?php
         if (isset($show_recaptcha) && $show_recaptcha)
         {

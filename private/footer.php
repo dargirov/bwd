@@ -27,6 +27,19 @@
                 </svg>
             </a>
         </div>
+        <?php
+        if (ENABLE_CSS_JS_MINIFICATION)
+        {
+        ?>
+        <script src="/js/min/main.min.<?php echo APP_VERSION; ?>.js"></script>
+        <?php
+        }
+        else
+        {
+        ?>
         <script src="/js/main.js?v=<?php echo APP_VERSION; ?>"></script>
+        <?php
+        }
+        ?>
     </body>
 </html>
