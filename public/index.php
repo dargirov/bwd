@@ -69,6 +69,7 @@ switch ($page)
     case 'add':
         $page_title = 'Добави безплатно сайт и данни за контакт';
         $page_description = 'Безплатно добавяне на сайт, кратка информация и данни за контакт';
+        $show_recaptcha = true;
         $page_name = 'add.php';
         if (!array_key_exists('loggedin', $_SESSION) || $_SESSION['loggedin'] !== 1)
         {
@@ -113,6 +114,7 @@ switch ($page)
     case 'contacts':
         $page_title = 'За контакти';
         $page_name = 'contacts.php';
+        $show_recaptcha = true;
         $class_active_contacts = 'contacts.php';
         break;
     case 'profile':

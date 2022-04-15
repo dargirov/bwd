@@ -122,6 +122,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     function openRegisterPopup(e) {
         e.preventDefault();
+
         var divOverlay = document.createElement('div');
         divOverlay.id = 'overlay';
         divOverlay.onclick = function(e) {
@@ -171,10 +172,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         var divGr = document.createElement('div');
         divGr.style.display = 'flex';
         divGr.style.justifyContent = 'center';
-        grecaptcha.render(divGr, {
-            'sitekey': '6LetxrIeAAAAAJrGGuHfKw26AU9dfnzxY5TWbZQ8',
-            'size': 'compact'
-          });
+        divGr.id = 'grecaptcha-reg';
         form.appendChild(divGr);
 
         var divSubmit = document.createElement('div');
@@ -209,6 +207,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         document.body.appendChild(divPopup);
         document.body.appendChild(divOverlay);
+
+        appendRecaptcha();
         return false;
     }
 
@@ -229,4 +229,28 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
      }, false);
 
+    var recaptchaAppended = false;
+    function appendRecaptcha() {
+        if (document.body.dataset.recaptcha == '1') {
+            recaptchaAppended = true;
+        }
+
+        if (!recaptchaAppended) {
+            var script = document.createElement('script');
+            script.src = 'https://www.google.com/recaptcha/api.js?hl=bg&onload=onloadRecaptchaCallback&render=explicit';
+            document.head.appendChild(script);
+            recaptchaAppended = true;
+        } else {
+            onloadRecaptchaCallback();
+        }
+    }
+
 });
+
+function onloadRecaptchaCallback() {
+    var divGr = document.getElementById('grecaptcha-reg');
+    grecaptcha.render(divGr, {
+        'sitekey': '6LetxrIeAAAAAJrGGuHfKw26AU9dfnzxY5TWbZQ8',
+        'size': 'compact'
+    });
+}

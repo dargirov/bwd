@@ -19,9 +19,16 @@
         ?>
 
         <link rel="stylesheet" href="/css/main.css?v=<?php echo APP_VERSION; ?>">
+        <?php
+        if (isset($show_recaptcha) && $show_recaptcha)
+        {
+        ?>
         <script src="https://www.google.com/recaptcha/api.js?hl=bg" async defer></script>
+        <?php
+        }
+        ?>
     </head>
-    <body>
+    <body data-recaptcha="<?php echo isset($show_recaptcha) && $show_recaptcha ? '1' : '0';?>">
         <?php
         /*
         https://colorhunt.co/palette/c6d57ed57e7ea2cdcdffe1af
@@ -29,7 +36,7 @@
         ?>
         <header>
             <div id="header-desktop">
-                <div id="logo-container"><a href="/"><img src="/images/logo.png" alt="BGWebDir лого"></a></div>
+                <div id="logo-container"><a href="/"><img src="/images/logo.png" alt="BGWebDir лого" width="83" height="60"></a></div>
                 <?php
                 if (!array_key_exists('loggedin', $_SESSION) || $_SESSION['loggedin'] !== 1)
                 {

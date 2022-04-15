@@ -2,7 +2,7 @@
             <div>
                 <div id="footer-logo">
                     <div>
-                        <a href="/"><img src="/images/logo.png" alt="лого"></a>
+                        <a href="/"><img src="/images/logo.png" alt="лого" width="83" height="60"></a>
                     </div>
                     <div>
                         <strong>За нас</strong>
