@@ -654,6 +654,27 @@ body > footer a {
     display: block;
 }
 
+ol.paging {
+    display: flex;
+    list-style-type: none;
+}
+
+ol.paging li {
+    padding: 0 5px;
+}
+
+ol.paging a {
+    display: block;
+    padding: 10px;
+    border: 1px solid #333;
+    background-color: #fff;
+    text-decoration: none;
+}
+
+ol.paging a.selected {
+    background-color: #A2CDCD;
+}
+
 @media all and (max-width: 1000px) {
 
     #header-desktop {

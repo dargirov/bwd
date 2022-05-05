@@ -24,7 +24,7 @@ $websites = $pdo->query("SELECT * FROM Websites WHERE Active = 1 ORDER BY Id DES
             <strong>Избрани категории</strong>
             <ul id="category-highlight-list">
                 <li><a href="/category/култура-изкуство-образование"><img src="images/folder.svg" alt="категория Култура, Изкуство и Образование"> Култура, Изкуство и Образование</a></li>
-                <li><a href="/category/потребителски-стоки-сслуги"><img src="images/folder.svg" alt="категория Потребителски Cтоки и Услуги"> Потребителски Cтоки и Услуги</a></li>
+                <li><a href="/category/потребителски-стоки-услуги"><img src="images/folder.svg" alt="категория Потребителски Cтоки и Услуги"> Потребителски Cтоки и Услуги</a></li>
                 <li><a href="/category/реклама-рекламни-материали"><img src="images/folder.svg" alt="категория Реклама и рекламни материали"> Реклама и рекламни материали</a></li>
                 <li><a href="/category/интернет-търговия"><img src="images/folder.svg" alt="категория Интернет търговия"> Интернет търговия</a></li>
                 <li><a href="/category/траурни-погребални-услуги"><img src="images/folder.svg" alt="категория Траурни и погребални услуги"> Траурни и погребални услуги</a></li>
